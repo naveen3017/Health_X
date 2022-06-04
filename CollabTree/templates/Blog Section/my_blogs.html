@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>CollabTree Blogs</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <!-- MDB -->
+     <link rel="stylesheet" href="css/mdb.min.css" />
+    <!-- Custom styles -->
+    <link href="https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" /> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+      <header>
+    <!-- Intro settings -->
+    <style>
+      #intro {
+        /* Margin to fix overlapping fixed navbar */
+        margin-top: 58px;
+      }
+      @media (max-width: 991px) {
+        #intro {
+          /* Margin to fix overlapping fixed navbar */
+          margin-top: 45px;
+        }
+      }
+      body{
+        background-color: darkturquoise !important;
+      }
+      .navbar{
+        top: 0;
+        position: fixed;
+        width: 100%;
+        z-index: 2;
+        background-color: aquamarine;
+      }
+
+      .row{
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 4px;
+      }
+      .column{
+        flex:25%;
+        max-width: 25%;
+        padding: 0 4px;
+      }
+      .card{
+        margin: 3px;
+        height: auto;
+        
+      }
+
+      .img-post{
+        float: left;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+       .matter-button-contained{
+         background-color:rgb(81, 205, 50);
+         padding: 0 20px;
+         transition: ease all 0.5s;
+       }
+       a:hover{
+       text-decoration:none;
+       }
+
+    </style>
+    <nav class="navbarr navbar navbar-expand-lg navbar-light navbar-custom" style="background-color: black;">
+      <a class="navbar-brand navbar-color" style="color: white;" href="#">COLLABTREE</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#NavbarCollapsedContent"
+        aria-controls="NavbarCollapsedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon" style="background-color: white;"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" style="background-color: black;" id="NavbarCollapsedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link active navbar-color" style="color: white;" href="{% url 'profile' %}">About Me</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navbar-color" style="color: white;" href="{% url 'dashboard' %}">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navbar-color" style="color: white;" href="{% url 'my_projects' %}">My Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navbar-color" style="color: white;" href="{% url 'blogs' %}">Blogs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navbar-color" style="color: white;" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Jumbotron -->
+    <div id="intro" class="p-5 text-center bg-light">
+      <h1 class="mb-3 h2">CollabTree Blogs</h1>
+      <p class="mb-3">Best & free guide to develope yourselves.</p>
+      <a class="matter-button-contained" href="{% url 'new_blog' %}" role="button" rel="nofollow"
+        target="_blank">Write a Blog</a>
+      <a class="matter-button-contained" href="{% url 'dashboard' %}"
+        role="button">Go to Home</a>
+    </div>
+    <!-- Jumbotron -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <main class="my-5">
+    <div class="container">
+      <!--Section: Content-->
+      <section class="text-center">
+        <h4 class="mb-5"><strong>My Blogs</strong></h4>
+        <hr style="border: 1px dotted black;">
+        <div class="container-fluid">
+        <div class="row">
+          {% for blog in blog_objects %}
+          <div class="col-md-3 grid">
+            <div class="card">
+              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                {% if blog.cover_image %}
+                <img src="{{blog.cover_image.url}}" class="img-post" />
+                {% else %}
+                <img src="{% static 'images/blog.jpeg' %}" class="img-post" />
+                {% endif %}
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{blog.title}}</h5>
+                <hr>
+                <p class="card-text">
+                  {{blog.body|truncatewords:3|slice:"-4"}}...
+                </p>
+                <p>
+                  {{blog.date_time}}
+                </p>
+                <!-- <div class="tags-container">
+                  {% for tag in blog.tags.all %}
+                    <a href="">{{tag}}</a>
+                  {% endfor %}
+                </div> -->
+                <a href="{% url 'view_blog' blog.id %}" class="matter-button-contained">Read</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      </section>
+    
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="bg-light text-lg-start">
+    <div class="py-4 text-center">
+      <!-- <a role="button" class="btn btn-primary btn-lg m-2"
+        href="#" rel="nofollow" target="_blank">
+        Write a Blog
+      </a> -->
+      <a role="button" class="matter-button-contained"
+        href="{% url 'new_blog' %}" rel="nofollow" target="_blank">
+        Write a Blog
+      </a>
+      <a role="button" class="matter-button-contained" href="{% url 'dashboard' %}">
+        Go To Home
+      </a>
+    </div>
+
+    <hr class="m-0" />
+
+    <div class="text-center py-4 align-items-center">
+      <p>Follow CollabTree on social media</p>
+      <a href="#" class="btn btn-primary m-1" role="button"
+        rel="nofollow" target="_blank">
+        <i class="fab fa-youtube"></i>
+      </a>
+      <a href="#" class="btn btn-primary m-1" role="button" rel="nofollow"
+        target="_blank">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="#" class="btn btn-primary m-1" role="button" rel="nofollow"
+        target="_blank">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#" class="btn btn-primary m-1" role="button" rel="nofollow"
+        target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-dark" href="https://mdbootstrap.com/">CollabTree</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!--Footer-->
+    <!-- MDB -->
+     <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+    <script type="text/javascript" src="js/script.js"></script> 
+    <script >
+      function myFunction(){
+      document.getElementById('myDropdown').classList.toggle('show');
+    };
+
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+  </script>
+</body>
+</html>

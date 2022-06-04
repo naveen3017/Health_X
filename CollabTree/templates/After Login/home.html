@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{user.username}}</title>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+    integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="{% static 'After Login/styles.css' %}" />
+  <link href="https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css" rel="stylesheet">
+  <style>
+    .searchbar {
+      position: relative !important;
+      display: block;
+      margin-top: 100px;
+      margin-bottom: 50px;
+      border: 2px solid black;
+      margin-left: auto;
+      margin-right: auto;
+      width: 35%;
+      border-radius: 4px;
+      padding: 4px;
+      height: 40px;
+      background: url("{% static 'images/search.png' %}") no-repeat scroll 4px 6px;
+      padding-left: 40px;
+    }
+
+    .s {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+    }
+
+    .s .sbtn {
+      position: relative;
+      align-self: center;
+      justify-self: center;
+      margin-top: -30px;
+      width: 100px;
+      padding: 5px;
+      background-color: rgb(22, 119, 35);
+      color: white;
+      margin-left: 46%;
+      margin-right: auto;
+    }
+
+    .s .sbtn:active {
+      color: white;
+      background-color: rgb(7, 185, 22);
+      padding: 2px;
+      border-top: 5px solid rgb(7, 185, 22);
+      border-bottom: 5px solid rgb(7, 185, 22);
+    }
+
+    .searchbar::placeholder {
+      position: relative;
+      font-size: 20px;
+    }
+
+    .searchbar:focus {
+      border: 3px solid black;
+    }
+
+    .filter-container {
+      display: inline-block;
+      float: left;
+      font-size: 20px;
+      font-family: sans-serif;
+    }
+
+    .latest-text {
+      text-align: center;
+      display: inline-block;
+      margin-left: -170px;
+    }
+
+    .btcolor {
+      width: 100%;
+    }
+
+    /* .container{
+        position: relative;
+      }
+
+      .job::after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 1s;
+      }
+
+      .job:hover::after {
+        transform: scale(1.4) scale(1.6);
+        background-color:blue;
+        opacity: 0;
+      } */
+
+    center {
+      margin-top: 10%;
+    }
+
+    img {
+      width: 300px;
+    }
+
+    .btn-danger {
+      margin: 4px;
+    }
+
+    .bottom div {
+      display: inline-block;
+      margin: 5px;
+
+    }
+
+    .bottom div img {
+      height: 300px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+
+    .bottom {
+      text-align: center;
+      margin-top: 5px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .top {
+      background-color: bisque;
+      width: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-expand-lg navbar-light navbar-custom"
+    style="z-index: 4; background-color: black; position: fixed; width: 100%">
+    <a class="navbar-brand navbar-color" style="color: white" href="#">Advertise</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#NavbarCollapsedContent"
+      aria-controls="NavbarCollapsedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span style="background-color: white" class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" style="background-color: black" id="NavbarCollapsedContent">
+      <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item">
+          <a class="nav-link navbar-color" style="color: white" href="{% url 'logout' %}">Logout</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  <center class="top">
+    <h2>Get started with us!</h2>
+    <form action="" method="post">
+      {% csrf_token %}
+      <label for="">Full Name: </label>
+      <br>
+      <input required type="text" name="name">
+      <br>
+      <label for="">Your Idea: </label>
+      <br>
+      <textarea required type="text" name="idea"></textarea>
+      <br>
+      <Label>Select Service:</Label>
+      <br>
+
+      <select required name="service" id="">
+        <option value="smm">Anxiety</option>
+        <option value="pr">Depression</option>
+        <option value="dm">Personality Development</option>
+        <option value="ap">Bipolar disorder</option>
+        <option value="eat">Anorexia nervosa</option>
+        <option value="Isolation">Social Isolation</option>
+      </select>
+      <br>
+      <br>
+      <input type="submit" value="Submit" class="btn btn-success">
+    </form>
+  </center>
+  <hr>
+  <center>
+    <h3>Selected Service(s): </h3>
+  </center>
+
+  <center class="bottom">
+    {% for service in services %}
+    <sdiv>
+      {% if service.service_name == "smm" %}
+      <p>Topic: <b>Anxiety</b></p>
+      <p>Subject: <b>{{service.idea}}</b></p>
+      <br>
+      <img src={% static 'images/anxiety.jpg' %} alt="{{service}}">
+      <br>
+      <a href="{% url 'delete' service.id %}" class="btn btn-danger">Delete Blog</a>
+      {% endif %}
+
+      </div>
+      <div>
+        {% if service.service_name == "pr" %}
+        <p>Topic: <b>Depression</b> </p>
+        <p>Subject: <b>{{service.idea}}</b></p>
+        <br>
+        <img src={% static 'images/depression.jpg' %} alt="{{service}}">
+        <br>
+        <a href="{% url 'delete' service.id %}" class="btn btn-danger">Delete Blog</a>
+        {% endif %}
+      </div>
+
+      <div>
+        {% if service.service_name == "dm" %}
+        <p>Topic: <b>Personality Development</b></p>
+        <p>Subject: <b>{{service.idea}}</b></p>
+        <br>
+        <img src={% static 'images/pd_dev.png' %} alt="{{service}}">
+        <br>
+        <a href="{% url 'delete' service.id %}" class="btn btn-danger">Delete Blog</a>
+        {% endif %}
+      </div>
+      <div>
+        {% if service.service_name == "ap" %}
+        <p>Topic: <b>Bipolar disorder</b></p>
+        <p>Subject: <b>{{service.idea}}</b></p>
+        <br>
+        <img src={% static 'images/Bipolar_dis.png' %} alt="{{service}}">
+        <br>
+        <a href="{% url 'delete' service.id %}" class="btn btn-danger">Delete Blog</a>
+        {% endif %}
+      </div>
+      <div>
+        {% if service.service_name == "eat" %}
+        <p>Topic: <b>Anorexia nervosa</b></p>
+        <p>Subject: <b>{{service.idea}}</b></p>
+        <br>
+        <img src={% static 'images/food_nice.jpg' %} alt="{{service}}">
+        <br>
+        <a href="{% url 'delete' service.id %}" class="btn btn-danger">Delete Blog</a>
+        {% endif %}
+      </div>
+      <div>
+        {% if service.service_name == "Isolation" %}
+        <p>Topic: <b>Depression</b> </p>
+        <p>Subject: <b>{{service.idea}}</b></p>
+        <br>
+        <img src={% static 'images/socio.png' %} alt="{{service}}">
+        <br>
+        <a href="{% url 'delete' service.id %}" class="btn btn-danger">Delete Blog</a>
+        {% endif %}
+      </div>
+
+
+      {% endfor %}
+  </center>
+
+
+
+
+
+
+
+
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $(".toast").toast("show");
+    });
+
+
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function (event) {
+      if (!event.target.matches(".dropbtn")) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains("show")) {
+            openDropdown.classList.remove("show");
+          }
+        }
+      }
+    };
+
+
+  </script>
+</body>
+
+</html>

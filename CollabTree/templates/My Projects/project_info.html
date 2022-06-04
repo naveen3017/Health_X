@@ -1,0 +1,45 @@
+{% extends "My Projects/project_info_parent.html" %}
+{% load custom_tags %}
+{% block content %}
+{% if not project.assigned_user %}
+<form action="{% url 'dashboard' %}" method="post">
+    {% csrf_token %}
+    <input
+    style = "display: none;"
+    type="text"
+    placeholder="Enter title"
+    name="project_title"
+    value="{{project.id}}"
+  />
+       {% check_user project.id project.applied_users.all curr_user as flag %}
+       
+
+       {% if flag == "found" %}
+       <a class="btn btn-outline-success my-2 my-sm-0" href="{% url 'dashboard' %}">Back</a>
+       <input type="submit" value="Applied" disabled>
+
+       {% elif flag == 'owner' %}
+       <a class="btn btn-outline-success my-2 my-sm-0" href="{% url 'dashboard' %}">Back</a>
+       <input type="submit" value="Owned By You" disabled>
+
+       
+
+       
+      
+       {% else %}
+       <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'dashboard' %}">Back</a>
+       <input type="submit" value="Apply" >
+       {% endif %}
+  </form>
+  {% else %}
+  Assigned User: {{project.assigned_user}}
+  <br>
+Status: {{project.status}}
+<br>
+{% ifequal project.status 'completed' %}
+  Rating: {{project.project_rating}}
+  <br>
+  Review: {{project.review}}
+  {% endifequal %}
+{% endif %}
+{% endblock %}
